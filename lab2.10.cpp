@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+int main() {
+    int N_PERIODS, cmdCode, i;
+    float initialBalance, PENALTY_FEE, amount;
+    float currentBalance, apr, interest;
+    float totalPenalties = 0.0;
+
+    if (scanf("%f %f %d", &initialBalance, &PENALTY_FEE, &N_PERIODS) != 3) {
+        return 1;
+    }
+
+    currentBalance = initialBalance;
+
+    printf("Starting Balance: %.2f\n", initialBalance);
+
+    for (i = 1; i <= N_PERIODS; i++) {
+        scanf("%d %f", &cmdCode, &amount);
+
+        switch (cmdCode) {
+            case 1:
+                currentBalance += amount;
+                printf("Deposit: %.2f\n", amount);
+                break;
+            case 2:
+                if (amount <= currentBalance) {
+                    currentBalance -= amount;
+                    printf("Withdrawal: %.2f\n", amount);
+                } else if (amount > currentBalance) {
+                    totalPenalties += PENALTY_FEE;
+                    printf("WITHDRAWAL FAILED. Penalty %.2f applied.\n", PENALTY_FEE);
+                }
+                break;
+            case 3:
+                if (currentBalance < 1000.00) {
+                    apr = 0.01;
+                } else if (currentBalance >= 1000.00) {
+                    apr = 0.025;
+                }
+
+                interest = currentBalance * (apr / 12.0);
+                currentBalance += interest;
+
+                printf("Interest: %.2f (Rate: %.2f%%)\n", interest, apr);
+                break;
+            default:
+                printf("Error: Invalid Command.");
+                break;
+        }
+
+        printf("--- Month %d ---\n", i);
+    }
+
+    printf("Final Balance: %.2f\n", currentBalance);
+    printf("Total Penalties: %.2f\n", totalPenalties);
+
+    return 0;
+}
