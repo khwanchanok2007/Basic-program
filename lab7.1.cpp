@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main()
+{
+    FILE *fptr;
+    const char *FILENAME = "output_data.txt";
+    int year = 2025;
+
+    fptr = fopen(FILENAME, "w");
+
+    if (fptr == NULL)
+    {
+        printf("ERROR: Could not open file %s for writing.\n", FILENAME);
+    }
+
+    printf("--- FILE WRITING PROCESS ---\n");
+    printf("Writing data to %s...\n", FILENAME);
+
+    fprintf(fptr, "Hello, C File Handling is easy.\n");
+    fprintf(fptr, "%d", year);
+
+    fclose(fptr);
+
+    printf("File writing complete.\n");
+    printf("\n--- FILE OPERATION REPORT ---\n");
+    printf("Action: File created and data written successfully.\n");
+    printf("Filename: %s\n", FILENAME);
+
+    return 0;
+}
